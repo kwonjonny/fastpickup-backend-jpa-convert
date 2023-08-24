@@ -32,15 +32,15 @@ public class MemberSearchImpl extends QuerydslRepositorySupport implements Membe
         log.info("Is Running MemberSearchImpl MemberList");
         QMemberEntity memberEntity = QMemberEntity.memberEntity;
         QMemberRoleEntity memberRoleEntity = QMemberRoleEntity.memberRoleEntity;
-
+        // FROM Member Entity 
         JPQLQuery<MemberEntity> query = from(memberEntity);
 
+        // LIMIT 를 잡아줍니다 Email 기준 Desending 
         int pageNum = pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1;
-
         Pageable pageable = PageRequest.of(pageNum, pageRequestDTO.getSize(), Sort.by("email").descending());
-
+        // Pagenation 
         this.getQuerydsl().applyPagination(pageable, query);
-
+        // GroupBy
         query.groupBy(memberEntity);
 
         JPQLQuery<MemberListDTO> dtoQuery = query.select(

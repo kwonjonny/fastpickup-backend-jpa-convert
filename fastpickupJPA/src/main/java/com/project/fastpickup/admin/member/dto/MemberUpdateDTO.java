@@ -1,6 +1,6 @@
 package com.project.fastpickup.admin.member.dto;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +20,5 @@ public class MemberUpdateDTO {
     private String memberPw;
     private String memberName;
     private String store;
-    private LocalDate joinDate;
+    private Timestamp joinDate;
 }
