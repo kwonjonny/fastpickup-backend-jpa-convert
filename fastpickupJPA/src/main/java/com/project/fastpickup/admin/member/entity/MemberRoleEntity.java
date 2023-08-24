@@ -32,20 +32,20 @@ public class MemberRoleEntity {
     // 정적 팩토리 메소드를 지향하라
     // CreateMemberRole Factory Method
     public static MemberRoleEntity createMemberRole(String email, String rolename) {
-        MemberRoleEntity memberRoleEntity = MemberRoleEntity.builder()
-                .email(email)
-                .rolename(rolename)
-                .build();
-        return memberRoleEntity;
+        return createOrUpdateMemberRole(email, rolename);
     }
 
     // 정적 팩토리 메소드를 지향하라
     // UpdateMemberRole Factory Method
     public static MemberRoleEntity updateMemberRole(String email, String rolename) {
-        MemberRoleEntity memberRoleEntity = MemberRoleEntity.builder()
+        return createOrUpdateMemberRole(email, rolename);
+    }
+
+    // 중복 로직을 담당하는 private 메소드
+    private static MemberRoleEntity createOrUpdateMemberRole(String email, String rolename) {
+        return MemberRoleEntity.builder()
                 .email(email)
                 .rolename(rolename)
                 .build();
-        return memberRoleEntity;
     }
 }

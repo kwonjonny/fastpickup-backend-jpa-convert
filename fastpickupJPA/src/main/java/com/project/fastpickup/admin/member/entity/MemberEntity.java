@@ -53,22 +53,21 @@ public class MemberEntity {
     // CreateMember Factory Method
     public static MemberEntity createMember(String email, String memberPw, String memberName, String memberPhone,
             String store, Timestamp joinDate) {
-        MemberEntity memberEntity = MemberEntity.builder()
-                .email(email)
-                .memberPw(memberPw)
-                .memberName(memberName)
-                .store(store)
-                .memberPhone(memberPhone)
-                .joinDate(joinDate)
-                .build();
-        return memberEntity;
+        return createOrUpdateMember(email, memberPw, memberName, memberPhone, store, joinDate);
     }
 
     // 정적 팩토리 메소드를 지향하라.
     // UpdateMember Factory Method
     public static MemberEntity updateMember(String email, String memberPw, String memberName, String memberPhone,
             String store, Timestamp joinDate) {
-        MemberEntity memberEntity = MemberEntity.builder()
+        return createOrUpdateMember(email, memberPw, memberName, memberPhone, store, joinDate);
+    }
+
+    // 중복 로직을 담당하는 private 메소드
+    private static MemberEntity createOrUpdateMember(String email, String memberPw, String memberName,
+            String memberPhone,
+            String store, Timestamp joinDate) {
+        return MemberEntity.builder()
                 .email(email)
                 .memberPw(memberPw)
                 .memberName(memberName)
@@ -76,6 +75,5 @@ public class MemberEntity {
                 .memberPhone(memberPhone)
                 .joinDate(joinDate)
                 .build();
-        return memberEntity;
     }
 }
