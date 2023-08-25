@@ -1,13 +1,18 @@
 package com.project.fastpickup.admin.member.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +53,9 @@ public class MemberEntity {
     @Column(name = "joinDate")
     @Comment("회원 가입 일")
     private Timestamp joinDate;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MemberRoleEntity> roles = new ArrayList<>();
 
     // 정적 팩토리 메소드를 지향하라.
     // CreateMember Factory Method

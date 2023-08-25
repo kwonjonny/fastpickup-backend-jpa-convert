@@ -1,24 +1,46 @@
 package com.project.fastpickup.admin.member.dto;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
+// MemberDTO Class
 @Getter
 @Setter
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberDTO {
+public class MemberDTO extends User implements OAuth2User {
+
     private String email;
-    private String memberPw;
     private String memberName;
-    private String store;
-    private Timestamp joinDate;
+    private String memberPw;
+    private List<String> roleNames = new ArrayList<>();
+
+    public MemberDTO(String email, String memberPw, String memberName, List<String> roleNames) {
+
+        // super(email,mpw, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        super(email, memberPw,
+                roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList()));
+        this.memberName = memberName;
+        this.email = email;
+        this.memberPw = memberPw;
+        this.roleNames = roleNames;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return this.email;
+    }
+
 }
